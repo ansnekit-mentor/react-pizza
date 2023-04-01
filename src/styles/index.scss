@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.App {
+    h1 {
+        font-size: 60px;
+        color: palevioletred;
+    }
+}
