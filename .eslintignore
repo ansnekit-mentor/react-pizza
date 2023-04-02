@@ -10,3 +10,4 @@ public
 vite.config.ts
 postcss.config.*
 tailwind.config.*
+.eslintrc.*
