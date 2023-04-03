@@ -10,7 +10,7 @@ const Categories = () => {
             <ul>
                 {CATEGORIES.map((category, idx) => (
                     <li key={category} className={activeIndex === idx ? 'active' : ''}>
-                        <button type="button" onClick={() => setActiveIndex(idx)}>
+                        <button tabIndex={0} type="button" onClick={() => setActiveIndex(idx)}>
                             {category}
                         </button>
                     </li>
