@@ -1,25 +1,68 @@
-const PizzaBlock = () => {
+import React from 'react'
+
+interface IPizzaBlock {
+    id: number
+    imageUrl: string
+    title: string
+    types: number[]
+    sizes: number[]
+    price: number
+    category: number
+    rating: number
+}
+
+const PizzaBlock = ({
+    id = 0,
+    imageUrl = '',
+    title = '',
+    types = [],
+    sizes = [],
+    price = 0,
+    category = 0,
+    rating = 0,
+}: IPizzaBlock) => {
+    const typeItems = [
+        { name: 'тонкое', value: 0 },
+        { name: 'традиционное', value: 0 },
+    ]
+    const [activeType, setActiveType] = React.useState(0)
+    const [activeSize, setActiveSize] = React.useState(26)
+
     return (
         <div className="pizza-block">
-            <img
-                className="pizza-block__image"
-                src="https://dodopizza-a.akamaihd.net/static/Img/Products/Pizza/ru-RU/b750f576-4a83-48e6-a283-5a8efb68c35d.jpg"
-                alt="Pizza"
-            />
-            <h4 className="pizza-block__title">Чизбургер-пицца</h4>
+            <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
+            <h4 className="pizza-block__title">{title}</h4>
             <div className="pizza-block__selector">
                 <ul>
-                    <li className="active">тонкое</li>
-                    <li>традиционное</li>
+                    {types.map((typeId) => (
+                        <li key={typeId}>
+                            <button
+                                type="button"
+                                className={typeId === activeType ? 'active' : ''}
+                                onClick={() => setActiveType(typeId)}
+                            >
+                                {typeItems[typeId].name}
+                            </button>
+                        </li>
+                    ))}
                 </ul>
                 <ul>
-                    <li className="active">26 см.</li>
-                    <li>30 см.</li>
-                    <li>40 см.</li>
+                    {sizes.length &&
+                        sizes.map((size) => (
+                            <li key={size}>
+                                <button
+                                    type="button"
+                                    className={size === activeSize ? 'active' : ''}
+                                    onClick={() => setActiveSize(size)}
+                                >
+                                    {size} см.
+                                </button>
+                            </li>
+                        ))}
                 </ul>
             </div>
             <div className="pizza-block__bottom">
-                <div className="pizza-block__price">от 395 ₽</div>
+                <div className="pizza-block__price">от {price} ₽</div>
                 <div className="button button--outline button--add">
                     <svg
                         width="12"
