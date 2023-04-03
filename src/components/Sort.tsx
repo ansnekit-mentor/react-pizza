@@ -1,6 +1,47 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+
+const sortNames = [
+    { name: 'популярности', value: 'popular' },
+    { name: 'цене', value: 'price' },
+    { name: 'алфавиту', value: 'alphabet' },
+]
 
 const Sort = () => {
+    const [isShow, setShow] = React.useState(false)
+    const [activeSort, setActiveSort] = React.useState(sortNames[0])
+
+    const onCloseSortApp = (evt: MouseEvent) => {
+        const target = evt.target as HTMLDivElement
+        if (target && target.classList.contains('sort__active-sort-name')) {
+            return
+        }
+        setShow(false)
+    }
+    const onKeyCloseSortApp = (evt: KeyboardEvent) => {
+        if (evt.key === 'Escape') {
+            setShow(false)
+        }
+    }
+
+    const onKeyEnter = (
+        evt: React.KeyboardEvent<HTMLDivElement>,
+        currentSort: { name: string; value: string },
+    ) => {
+        if (evt.key === 'Enter') {
+            setActiveSort(currentSort)
+            setShow(false)
+        }
+    }
+
+    useEffect(() => {
+        document.addEventListener('click', onCloseSortApp)
+        document.addEventListener('keydown', onKeyCloseSortApp)
+        return () => {
+            document.removeEventListener('click', onCloseSortApp)
+            document.removeEventListener('keydown', onKeyCloseSortApp)
+        }
+    }, [])
+
     return (
         <div className="sort">
             <div className="sort__label">
@@ -17,15 +58,33 @@ const Sort = () => {
                     />
                 </svg>
                 <b>Сортировка по:</b>
-                <span>популярности</span>
+                <button
+                    type="button"
+                    className="sort__active-sort-name"
+                    onClick={() => setShow(!isShow)}
+                >
+                    {activeSort.name}
+                </button>
             </div>
-            <div className="sort__popup">
-                <ul>
-                    <li className="active">популярности</li>
-                    <li>цене</li>
-                    <li>алфавиту</li>
-                </ul>
-            </div>
+            {isShow && (
+                <div className="sort__popup">
+                    <ul>
+                        {sortNames.map((item) => (
+                            <li key={item.value}>
+                                <div
+                                    role="button"
+                                    tabIndex={0}
+                                    className={item.value === activeSort.value ? 'active' : ''}
+                                    onClick={() => setActiveSort(item)}
+                                    onKeyDown={(evt) => onKeyEnter(evt, item)}
+                                >
+                                    {item.name}
+                                </div>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            )}
         </div>
     )
 }

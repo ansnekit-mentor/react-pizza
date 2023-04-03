@@ -13,11 +13,13 @@
         b {
             margin-right: 8px;
         }
+    }
 
-        span {
-            color: $orange;
-            border-bottom: 1px dashed $orange;
-            cursor: pointer;
+    &__active-sort-name {
+        color: $orange;
+        border-bottom: 1px dashed $orange;
+        &:focus {
+            outline: 2px solid black;
         }
     }
 
@@ -34,13 +36,17 @@
 
         ul {
             overflow: hidden;
-            li {
+            li div {
                 padding: 12px 20px;
                 cursor: pointer;
+                border: 2px solid transparent;
 
                 &.active,
                 &:hover {
                     background: rgba(254, 95, 30, 0.05);
+                }
+                &:focus {
+                    border: 2px solid #000;
                 }
 
                 &.active {
