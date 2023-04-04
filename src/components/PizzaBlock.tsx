@@ -1,6 +1,6 @@
 import React from 'react'
 
-interface IPizzaBlock {
+export interface IPizzaBlock {
     id: number
     imageUrl: string
     title: string
