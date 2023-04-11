@@ -21,13 +21,13 @@ const PagePizza = () => {
     }, [])
 
     return (
-        <div className="container">
-            <div className="content__top">
+        <div className="local-container">
+            <div className="content__top flex flex-1 flex-col-reverse items-end min-[1100px]:flex-row min-[1100px]:!items-center">
                 <Categories />
                 <Sort />
             </div>
             <h2 className="content__title">Все пиццы</h2>
-            <div className="content__items">
+            <div className="content__items grid gap-8 grid-cols-1 grid-rows-2 justify-items-center md:grid-cols-2 min-[1100px]:grid-cols-3 2xl:grid-cols-4">
                 {isLoading && skeletItems.map((_) => <Skeleton />)}
                 {items.length &&
                     items.map((pizza: IPizzaBlock) => <PizzaBlock key={pizza.id} {...pizza} />)}

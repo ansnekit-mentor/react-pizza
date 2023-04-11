@@ -2,36 +2,14 @@
 
 .categories {
     ul {
-        display: flex;
-
         li {
             padding: 0;
             margin: 0;
-            margin-right: 10px;
             @include noselect();
-
-            &:hover {
-                background-color: darken(#f9f9f9, 2%);
-            }
-
-            &:active {
-                background-color: darken(#f9f9f9, 5%);
-            }
-
-            &.active {
-                button {
-                    background-color: #282828;
-                    color: #fff;
-
-                    &:focus {
-                        outline: 2px solid red;
-                    }
-                }
-            }
 
             button {
                 background-color: #f9f9f9;
-                padding: 13px 30px;
+                padding: 8px 24px;
                 border-radius: 30px;
                 font-weight: bold;
                 cursor: pointer;
@@ -39,6 +17,23 @@
 
                 &:focus {
                     outline: 2px solid #000;
+                }
+
+                &:hover {
+                    background-color: darken(#f9f9f9, 2%);
+                }
+
+                &:active {
+                    background-color: darken(#f9f9f9, 5%);
+                }
+
+                &.active {
+                    background-color: #282828;
+                    color: #fff;
+
+                    &:focus {
+                        outline: 2px solid red;
+                    }
                 }
             }
         }

@@ -33,9 +33,9 @@ const PizzaBlock = ({
             <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
             <h4 className="pizza-block__title">{title}</h4>
             <div className="pizza-block__selector">
-                <ul>
+                <ul className="flex flex-1 mb-1">
                     {types.map((typeId) => (
-                        <li key={typeId}>
+                        <li key={typeId} className="flex flex-1">
                             <button
                                 type="button"
                                 className={typeId === activeType ? 'active' : ''}
@@ -46,10 +46,10 @@ const PizzaBlock = ({
                         </li>
                     ))}
                 </ul>
-                <ul>
+                <ul className="flex flex-1">
                     {sizes.length &&
                         sizes.map((size) => (
-                            <li key={size}>
+                            <li key={size} className="flex flex-1">
                                 <button
                                     type="button"
                                     className={size === activeSize ? 'active' : ''}
@@ -63,7 +63,7 @@ const PizzaBlock = ({
             </div>
             <div className="pizza-block__bottom">
                 <div className="pizza-block__price">от {price} ₽</div>
-                <div className="button button--outline button--add">
+                <div className="button button--outline button--add flex items-center">
                     <svg
                         width="12"
                         height="12"

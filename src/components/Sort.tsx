@@ -57,7 +57,9 @@ const Sort = () => {
                         fill="#2C2C2C"
                     />
                 </svg>
-                <b>Сортировка по:</b>
+                <b className="min-[1100px]:hidden 2xl:inline-block 2xl:whitespace-nowrap">
+                    Сортировка по:
+                </b>
                 <button
                     type="button"
                     className="sort__active-sort-name"

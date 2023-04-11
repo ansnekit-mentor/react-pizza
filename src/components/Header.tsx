@@ -5,12 +5,17 @@ import PizzaLogoSvg from '../assets/img/pizza-logo.svg'
 const Header = () => {
     return (
         <div className="header">
-            <div className="container">
-                <div className="header__logo">
-                    <img width="38" src={PizzaLogoSvg} alt="Pizza logo" />
-                    <div>
+            <div className="local-container flex flex-1 flex-col items-center justify-between gap-y-5 md:flex-row">
+                <div className="header__logo flex">
+                    <img
+                        className="self-start mr-2"
+                        width="38"
+                        src={PizzaLogoSvg}
+                        alt="Pizza logo"
+                    />
+                    <div className="d-flex flex-1">
                         <h1>React Pizza</h1>
-                        <p>самая вкусная пицца во вселенной</p>
+                        <p className="mt-2 -ml-12">самая вкусная пицца во вселенной</p>
                     </div>
                 </div>
                 <div className="header__cart">
