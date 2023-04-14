@@ -1,0 +1,34 @@
+.root {
+    display: flex;
+    gap: 4px;
+
+    :global {
+        li {
+            display: block;
+
+            &:hover a {
+                background-color: #ffbc9d;
+            }
+
+            &.disabled a {
+                background-color: #eee;
+                border: 1px solid #a3a3a3;
+            }
+            &.selected a {
+                background-color: #ff5100;
+            }
+
+            a {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 50px;
+                height: 50px;
+                border-radius: 9999px;
+                border: 1px solid #ff5100;
+                padding: 5px;
+                cursor: pointer;
+            }
+        }
+    }
+}

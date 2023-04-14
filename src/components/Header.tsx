@@ -1,11 +1,12 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import PizzaLogoSvg from '../assets/img/pizza-logo.svg'
+import Search from './Search'
 
 const Header = () => {
     return (
         <div className="header">
-            <div className="local-container flex flex-1 flex-col items-center justify-between gap-y-5 md:flex-row">
+            <div className="local-container flex flex-1 flex-col items-center justify-between gap-y-5 lg:flex-row">
                 <div className="header__logo flex">
                     <img
                         className="self-start mr-2"
@@ -18,6 +19,7 @@ const Header = () => {
                         <p className="mt-2 -ml-12">самая вкусная пицца во вселенной</p>
                     </div>
                 </div>
+                <Search />
                 <div className="header__cart">
                     <Link to="/cart" className="button button--cart">
                         <span>520 ₽</span>
