@@ -1,4 +1,7 @@
 import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { RootState } from '../redux/store'
+import { changeSort } from '../redux/slices/filterSlice'
 
 const sortNames = [
     { name: 'популярности', value: 'popular' },
@@ -8,7 +11,8 @@ const sortNames = [
 
 const Sort = () => {
     const [isShow, setShow] = React.useState(false)
-    const [activeSort, setActiveSort] = React.useState(sortNames[0])
+    const sort = useSelector((state: RootState) => state.filter.sort)
+    const dispatch = useDispatch()
 
     const onCloseSortApp = (evt: MouseEvent) => {
         const target = evt.target as HTMLDivElement
@@ -28,7 +32,7 @@ const Sort = () => {
         currentSort: { name: string; value: string },
     ) => {
         if (evt.key === 'Enter') {
-            setActiveSort(currentSort)
+            dispatch(changeSort(currentSort))
             setShow(false)
         }
     }
@@ -65,7 +69,7 @@ const Sort = () => {
                     className="sort__active-sort-name"
                     onClick={() => setShow(!isShow)}
                 >
-                    {activeSort.name}
+                    {sort.name}
                 </button>
             </div>
             {isShow && (
@@ -76,8 +80,8 @@ const Sort = () => {
                                 <div
                                     role="button"
                                     tabIndex={0}
-                                    className={item.value === activeSort.value ? 'active' : ''}
-                                    onClick={() => setActiveSort(item)}
+                                    className={item.value === sort.value ? 'active' : ''}
+                                    onClick={() => dispatch(changeSort(item))}
                                     onKeyDown={(evt) => onKeyEnter(evt, item)}
                                 >
                                     {item.name}
