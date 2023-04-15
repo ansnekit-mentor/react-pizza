@@ -5,6 +5,7 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 export interface IFilterSlice {
     categoryId: number
     sort: ISort
+    search: string
 }
 
 export interface ISort {
@@ -18,6 +19,7 @@ const initialState: IFilterSlice = {
         name: 'Популярности',
         value: 'rating',
     },
+    search: '',
 }
 
 export const counterSlice = createSlice({
@@ -30,9 +32,12 @@ export const counterSlice = createSlice({
         changeSort(state, action: PayloadAction<ISort>) {
             state.sort = action.payload
         },
+        changeSearch(state, action: PayloadAction<string>) {
+            state.search = action.payload
+        },
     },
 })
 
-export const { setCategoryId, changeSort } = counterSlice.actions
+export const { setCategoryId, changeSort, changeSearch } = counterSlice.actions
 
 export default counterSlice.reducer
