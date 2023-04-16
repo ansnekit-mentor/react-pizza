@@ -7,9 +7,9 @@ import { changeSearch } from '../redux/slices/filterSlice'
 
 const Search = () => {
     const dispatch = useDispatch()
-
     const [search, setSearch] = React.useState('')
     const searchInp = React.useRef<HTMLInputElement>(null)
+
     const onClearSearch = () => {
         setSearch('')
 
