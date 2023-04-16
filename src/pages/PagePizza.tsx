@@ -5,15 +5,16 @@ import PizzaBlock, { IPizzaBlock } from '../components/PizzaBlock'
 import Skeleton from '../components/PizzaBlock/Skeleton'
 import Sort from '../components/Sort'
 import { RootState } from '../redux/store'
-import { setCategoryId } from '../redux/slices/filterSlice'
+import { setCategoryId, setCurrentPage } from '../redux/slices/filterSlice'
+import Paginate from '../components/Pagination'
 
 const PagePizza = () => {
+    const dispatch = useDispatch()
+    const { categoryId, currentPage } = useSelector((state: RootState) => state.filter)
+
     const [items, setItems] = React.useState([])
     const [isLoading, setLoading] = React.useState(true)
     const skeletItems = Array(9).fill(1)
-
-    const categoryId = useSelector((state: RootState) => state.filter.categoryId)
-    const dispatch = useDispatch()
 
     React.useEffect(() => {
         fetch('https://642c86dbbf8cbecdb4f2a883.mockapi.io/api/items')
@@ -41,6 +42,14 @@ const PagePizza = () => {
                 {items.length &&
                     items.map((pizza: IPizzaBlock) => <PizzaBlock key={pizza.id} {...pizza} />)}
             </div>
+
+            <Paginate
+                className="mt-8"
+                forcePage={currentPage - 1}
+                pageCount={3}
+                pageRangeDisplayed={4}
+                onChangePage={(page) => dispatch(setCurrentPage(page + 1))}
+            />
         </div>
     )
 }
