@@ -14,6 +14,16 @@ export interface ISort {
     value: string
 }
 
+interface IParams {
+    category: number
+    sort?: {
+        name: string
+        value: string
+    }
+    search: string
+    page: number
+}
+
 const initialState: IFilterSlice = {
     categoryId: 0,
     sort: {
@@ -40,9 +50,18 @@ export const counterSlice = createSlice({
         setCurrentPage(state, action: PayloadAction<number>) {
             state.currentPage = action.payload
         },
+        setParams(state, action: PayloadAction<IParams>) {
+            if (action.payload.sort) {
+                state.sort = action.payload.sort
+            }
+            state.categoryId = Number(action.payload.category)
+            state.search = action.payload.search
+            state.currentPage = Number(action.payload.page)
+        },
     },
 })
 
-export const { setCategoryId, changeSort, changeSearch, setCurrentPage } = counterSlice.actions
+export const { setCategoryId, changeSort, changeSearch, setCurrentPage, setParams } =
+    counterSlice.actions
 
 export default counterSlice.reducer

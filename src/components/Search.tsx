@@ -12,6 +12,7 @@ const Search = () => {
 
     const onClearSearch = () => {
         setSearch('')
+        dispatch(changeSearch(''))
 
         if (searchInp.current) {
             searchInp.current.focus()
