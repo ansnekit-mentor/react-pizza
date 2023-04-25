@@ -1,4 +1,7 @@
 import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { addItem } from '../../redux/slices/cartSlice'
+import { RootState } from '../../redux/store'
 
 export interface IPizzaBlock {
     id: number
@@ -18,8 +21,6 @@ const PizzaBlock = ({
     types = [],
     sizes = [],
     price = 0,
-    category = 0,
-    rating = 0,
 }: IPizzaBlock) => {
     const typeItems = [
         { name: 'тонкое', value: 0 },
@@ -27,6 +28,23 @@ const PizzaBlock = ({
     ]
     const [activeType, setActiveType] = React.useState(0)
     const [activeSize, setActiveSize] = React.useState(26)
+
+    const dispatch = useDispatch()
+    const cartItem = useSelector((state: RootState) => state.cart.items.find((el) => el.id === id))
+    const addedCount = cartItem ? cartItem.count : 0
+
+    const onAddCart = () => {
+        const item = {
+            id,
+            title,
+            imageUrl,
+            price,
+            type: typeItems[activeType].name,
+            size: activeSize,
+            count: 1,
+        }
+        dispatch(addItem(item))
+    }
 
     return (
         <div className="pizza-block">
@@ -63,7 +81,11 @@ const PizzaBlock = ({
             </div>
             <div className="pizza-block__bottom">
                 <div className="pizza-block__price">от {price} ₽</div>
-                <div className="button button--outline button--add flex items-center">
+                <button
+                    type="button"
+                    className="button button--outline button--add flex items-center"
+                    onClick={onAddCart}
+                >
                     <svg
                         width="12"
                         height="12"
@@ -77,8 +99,8 @@ const PizzaBlock = ({
                         />
                     </svg>
                     <span>Добавить</span>
-                    <i>2</i>
-                </div>
+                    {addedCount > 0 && <i>{addedCount}</i>}
+                </button>
             </div>
         </div>
     )
