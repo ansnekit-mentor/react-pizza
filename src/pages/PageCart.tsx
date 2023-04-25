@@ -1,11 +1,19 @@
+/* eslint-disable no-alert */
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import CartItem from '../components/CartItem'
 import { RootState } from '../redux/store'
+import { clearItems } from '../redux/slices/cartSlice'
 
 const PageCart = () => {
     const dispatch = useDispatch()
-    const { items } = useSelector((state: RootState) => state.cart)
+    const { items, totalPrice } = useSelector((state: RootState) => state.cart)
+    const totalCount = items.reduce((sum, item) => sum + item.count, 0)
+    const onClearCart = () => {
+        if (window.confirm('Очистить всю корзину?')) {
+            dispatch(clearItems())
+        }
+    }
     return (
         <div className="local-container container--cart">
             <div className="cart">
@@ -42,7 +50,7 @@ const PageCart = () => {
                         </svg>
                         Корзина
                     </h2>
-                    <div className="cart__clear">
+                    <button onClick={onClearCart} type="button" className="cart__clear">
                         <svg
                             width="20"
                             height="20"
@@ -80,7 +88,7 @@ const PageCart = () => {
                             />
                         </svg>
                         <span>Очистить корзину</span>
-                    </div>
+                    </button>
                 </div>
                 <div className="content__items grid gap-2 grid-cols-1 lg:grid-cols-2 xl:grid-cols-1">
                     {items.map((item) => (
@@ -90,12 +98,10 @@ const PageCart = () => {
                 <div className="cart__bottom gap-10 flex flex-col">
                     <div className="cart__bottom-details gap-3 flex flex-col sm:flex-row sm:justify-between">
                         <span>
-                            {' '}
-                            Всего пицц: <b>3 шт.</b>{' '}
+                            Всего пицц: <b>{totalCount} шт.</b>
                         </span>
                         <span>
-                            {' '}
-                            Сумма заказа: <b>900 ₽</b>{' '}
+                            Сумма заказа: <b>{totalPrice} ₽</b>
                         </span>
                     </div>
                     <div className="cart__bottom-button gap-3 flex flex-col sm:flex-row sm:justify-between">

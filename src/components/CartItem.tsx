@@ -1,4 +1,9 @@
-const CartItem = ({ id, title, count, imageUrl, type, size }) => {
+import { useDispatch } from 'react-redux'
+import { countPlus, countMinus, removeItem, ICartItem } from '../redux/slices/cartSlice'
+
+const CartItem = ({ id, title, price, count, imageUrl, type, size }: ICartItem) => {
+    const dispatch = useDispatch()
+
     return (
         <div className="cart__item py-7 w-full flex flex-wrap justify-between items-center gap-3">
             <div className="flex gap-x-4">
@@ -14,7 +19,11 @@ const CartItem = ({ id, title, count, imageUrl, type, size }) => {
             </div>
             <div className="flex gap-x-10 justify-end">
                 <div className="cart__item-count">
-                    <div className="button button--outline button--circle cart__item-count-minus">
+                    <button
+                        onClick={() => dispatch(countMinus(id))}
+                        type="button"
+                        className="button button--outline button--circle cart__item-count-minus"
+                    >
                         <svg
                             width="10"
                             height="10"
@@ -31,9 +40,13 @@ const CartItem = ({ id, title, count, imageUrl, type, size }) => {
                                 fill="#EB5A1E"
                             />
                         </svg>
-                    </div>
+                    </button>
                     <b>{count}</b>
-                    <div className="button button--outline button--circle cart__item-count-plus">
+                    <button
+                        onClick={() => dispatch(countPlus(id))}
+                        type="button"
+                        className="button button--outline button--circle cart__item-count-plus"
+                    >
                         <svg
                             width="10"
                             height="10"
@@ -50,13 +63,17 @@ const CartItem = ({ id, title, count, imageUrl, type, size }) => {
                                 fill="#EB5A1E"
                             />
                         </svg>
-                    </div>
+                    </button>
                 </div>
                 <div className="cart__item-price">
-                    <b>770 ₽</b>
+                    <b>{price} ₽</b>
                 </div>
                 <div className="cart__item-remove">
-                    <div className="button button--outline button--circle">
+                    <button
+                        onClick={() => dispatch(removeItem(id))}
+                        type="button"
+                        className="button button--outline button--circle"
+                    >
                         <svg
                             width="10"
                             height="10"
@@ -73,7 +90,7 @@ const CartItem = ({ id, title, count, imageUrl, type, size }) => {
                                 fill="#EB5A1E"
                             />
                         </svg>
-                    </div>
+                    </button>
                 </div>
             </div>
         </div>
