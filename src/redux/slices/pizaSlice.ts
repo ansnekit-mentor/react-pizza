@@ -42,12 +42,10 @@ export const pizaSlice = createSlice({
         [fetchPizzas.fulfilled]: (state: RootState, action: PayloadAction) => {
             state.status = 'complete'
             state.items = action.payload
-            console.log('Успешно')
         },
         [fetchPizzas.rejected]: (state: RootState) => {
             state.status = 'error'
             state.items = []
-            console.log('Ошибка')
         },
     },
 })
