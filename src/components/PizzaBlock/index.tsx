@@ -1,18 +1,7 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { addItem } from '../../redux/slices/cartSlice'
-import { RootState } from '../../redux/store'
-
-export interface IPizzaBlock {
-    id: number
-    imageUrl: string
-    title: string
-    types: number[]
-    sizes: number[]
-    price: number
-    category: number
-    rating: number
-}
+import { addItem, selectCartItem } from '../../redux/slices/cartSlice'
+import { IPizzaBlock } from '../../types'
 
 const PizzaBlock = ({
     id = 0,
@@ -30,7 +19,7 @@ const PizzaBlock = ({
     const [activeSize, setActiveSize] = React.useState(26)
 
     const dispatch = useDispatch()
-    const cartItem = useSelector((state: RootState) => state.cart.items.find((el) => el.id === id))
+    const cartItem = useSelector(selectCartItem(id))
     const addedCount = cartItem ? cartItem.count : 0
 
     const onAddCart = () => {

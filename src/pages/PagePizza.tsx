@@ -1,15 +1,15 @@
 import React from 'react'
-import axios from 'axios'
 import qs from 'query-string'
 import { useNavigate } from 'react-router'
 import { useDispatch, useSelector } from 'react-redux'
 import Categories from '../components/Categories'
-import PizzaBlock, { IPizzaBlock } from '../components/PizzaBlock'
+import PizzaBlock from '../components/PizzaBlock'
 import Skeleton from '../components/PizzaBlock/Skeleton'
 import Sort, { sortNames } from '../components/Sort'
-import { RootState } from '../redux/store'
-import { setCategoryId, setCurrentPage, setParams } from '../redux/slices/filterSlice'
+import { selectFilter, setCategoryId, setCurrentPage, setParams } from '../redux/slices/filterSlice'
 import Paginate from '../components/Pagination'
+import { IPizzaBlock } from '../types'
+import { fetchPizzas, selectPizza } from '../redux/slices/pizaSlice'
 
 const PagePizza = () => {
     const dispatch = useDispatch()
@@ -17,36 +17,23 @@ const PagePizza = () => {
     const isSearch = React.useRef(false)
     const isMounted = React.useRef(false)
 
-    const { categoryId, sort, search, currentPage } = useSelector(
-        (state: RootState) => state.filter,
-    )
+    const { items, status } = useSelector(selectPizza)
+    const { categoryId, sort, search, currentPage } = useSelector(selectFilter)
 
-    const [items, setItems] = React.useState([])
-    const [isLoading, setLoading] = React.useState(true)
-    const skeletItems = Array(9).fill(1)
+    const skeletItems = Array(9)
+        .fill(1)
+        .map((el, idx) => el + idx)
 
     const fetchItems = () => {
-        setLoading(true)
-
-        const config = {
-            params: {
+        dispatch(
+            fetchPizzas({
                 category: categoryId || undefined,
                 title: search || undefined,
                 sort: sort.value,
                 page: currentPage,
                 limit: 4,
-            },
-        }
-
-        axios
-            .get('https://642c86dbbf8cbecdb4f2a883.mockapi.io/api/items', config)
-            .then((res) => res.data)
-            .then((data) => {
-                setItems(data)
-            })
-            .finally(() => {
-                setLoading(false)
-            })
+            }),
+        )
     }
 
     // Если изменили параметры и был первый рендер
@@ -77,7 +64,6 @@ const PagePizza = () => {
             const sortName = sortNames.find((el) => el.value === params.search)
 
             dispatch(setParams({ ...params, sort: sortName }))
-            console.log(params)
             isSearch.current = true
         }
     }, [])
@@ -101,11 +87,19 @@ const PagePizza = () => {
                 <Sort />
             </div>
             <h2 className="content__title">Все пиццы</h2>
-            <div className="content__items grid gap-8 grid-cols-1 justify-items-center md:grid-cols-2 min-[1100px]:grid-cols-3 2xl:grid-cols-4">
-                {isLoading && skeletItems.map(() => <Skeleton />)}
-                {items.length &&
-                    items.map((pizza: IPizzaBlock) => <PizzaBlock key={pizza.id} {...pizza} />)}
-            </div>
+            {status === 'error' ? (
+                <div>
+                    <h2>Ошибка 😕</h2>
+                    <p className="mb-4">Пиццы не найдены</p>
+                </div>
+            ) : (
+                <div className="content__items grid gap-8 grid-cols-1 justify-items-center md:grid-cols-2 min-[1100px]:grid-cols-3 2xl:grid-cols-4">
+                    {status === 'loading' && skeletItems.map((el) => <Skeleton key={el} />)}
+                    {items.map((pizza: IPizzaBlock) => (
+                        <PizzaBlock key={pizza.id} {...pizza} />
+                    ))}
+                </div>
+            )}
 
             <Paginate
                 className="mt-8"

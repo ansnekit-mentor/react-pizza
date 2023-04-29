@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { RootState } from '../redux/store'
-import { changeSort } from '../redux/slices/filterSlice'
+import { changeSort, selectFilterSort } from '../redux/slices/filterSlice'
 
 export const sortNames = [
     { name: 'популярности', value: 'popular' },
@@ -11,7 +10,7 @@ export const sortNames = [
 
 const Sort = () => {
     const [isShow, setShow] = React.useState(false)
-    const sort = useSelector((state: RootState) => state.filter.sort)
+    const sort = useSelector(selectFilterSort)
     const dispatch = useDispatch()
 
     const onCloseSortApp = (evt: MouseEvent) => {

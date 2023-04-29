@@ -1,27 +1,14 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
+import { IPizzasParams, ISort } from '../../types'
+import { RootState } from '../store'
 
 export interface IFilterSlice {
     categoryId: number
     sort: ISort
     search: string
     currentPage: number
-}
-
-export interface ISort {
-    name: string
-    value: string
-}
-
-interface IParams {
-    category: number
-    sort?: {
-        name: string
-        value: string
-    }
-    search: string
-    page: number
 }
 
 const initialState: IFilterSlice = {
@@ -50,7 +37,7 @@ export const counterSlice = createSlice({
         setCurrentPage(state, action: PayloadAction<number>) {
             state.currentPage = action.payload
         },
-        setParams(state, action: PayloadAction<IParams>) {
+        setParams(state, action: PayloadAction<IPizzasParams>) {
             if (action.payload.sort) {
                 state.sort = action.payload.sort
             }
@@ -61,7 +48,8 @@ export const counterSlice = createSlice({
     },
 })
 
+export const selectFilter = (state: RootState) => state.filter
+export const selectFilterSort = (state: RootState) => state.filter.sort
 export const { setCategoryId, changeSort, changeSearch, setCurrentPage, setParams } =
     counterSlice.actions
-
 export default counterSlice.reducer
