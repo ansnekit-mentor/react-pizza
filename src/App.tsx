@@ -4,21 +4,21 @@ import Header from './components/Header'
 import './styles/app.scss'
 import PageCart from './pages/PageCart'
 import Page404 from './pages/Page404'
-import PizzaPage from './pages/PagePizza'
+import PagePizzaList from './pages/PagePizzaList'
+import PagePizzaDetail from './pages/PagePizzaDetail'
+import LayoutDefault from './layouts/LayoutDefault'
 
 function App() {
     return (
         <div className="App">
-            <div className="wrapper">
-                <Header />
-                <div className="content">
-                    <Routes>
-                        <Route index element={<PizzaPage />} />
-                        <Route path="/cart" element={<PageCart />} />
-                        <Route path="*" element={<Page404 />} />
-                    </Routes>
-                </div>
-            </div>
+            <Routes>
+                <Route path="/" element={<LayoutDefault />}>
+                    <Route index element={<PagePizzaList />} />
+                    <Route path="/cart" element={<PageCart />} />
+                    <Route path="/:id" element={<PagePizzaDetail />} />
+                    <Route path="*" element={<Page404 />} />
+                </Route>
+            </Routes>
         </div>
     )
 }

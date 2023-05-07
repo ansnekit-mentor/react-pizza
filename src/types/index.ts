@@ -1,5 +1,5 @@
 export interface IPizzaBlock {
-    id: number
+    id: string
     imageUrl: string
     title: string
     types: number[]

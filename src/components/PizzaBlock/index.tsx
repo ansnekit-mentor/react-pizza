@@ -4,7 +4,7 @@ import { addItem, selectCartItem } from '../../redux/slices/cartSlice'
 import { IPizzaBlock } from '../../types'
 
 const PizzaBlock = ({
-    id = 0,
+    id = '0',
     imageUrl = '',
     title = '',
     types = [],

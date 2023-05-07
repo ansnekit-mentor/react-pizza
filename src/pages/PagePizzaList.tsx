@@ -2,6 +2,7 @@ import React from 'react'
 import qs from 'query-string'
 import { useNavigate } from 'react-router'
 import { useDispatch, useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 import Categories from '../components/Categories'
 import PizzaBlock from '../components/PizzaBlock'
 import Skeleton from '../components/PizzaBlock/Skeleton'
@@ -96,7 +97,9 @@ const PagePizza = () => {
                 <div className="content__items grid gap-8 grid-cols-1 justify-items-center md:grid-cols-2 min-[1100px]:grid-cols-3 2xl:grid-cols-4">
                     {status === 'loading' && skeletItems.map((el) => <Skeleton key={el} />)}
                     {items.map((pizza: IPizzaBlock) => (
-                        <PizzaBlock key={pizza.id} {...pizza} />
+                        <Link key={pizza.id} to={pizza.id}>
+                            <PizzaBlock {...pizza} />
+                        </Link>
                     ))}
                 </div>
             )}
